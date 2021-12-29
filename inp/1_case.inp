@@ -1,0 +1,22 @@
+1    !read(1,*) label_inp_case=1 > read first line of inp as label
+1    !read(1,*) FFT_pack_case=1 > FFTW - 2 > MKL_DFTI
+1    !read(1,*) FFT_win_case
+1    !read(1,*) HHG_case=1 > giving power spectrum
+1    !read(1,*) amp_spec_case=1 > computing amplitude spectrum
+1    !read(1,*) phase_spec_case=1 > computing phase spectrum
+0    !read(1,*) att_pulse_case=1 > attosecond pulse filtered between att_harm_i and att_harm_f
+1    !read(1,*) Time_profile_case=1 >  Time_profile using Gabor transform for HHG Power Spectra - 2> Amplitude spectra - 3> Phase spectra
+0    !read(1,*) harm_scan_case 
+1    !read(1,*) time_case=1 > a.u. (other columns are also in a.u.) - 2 > fs (other columns are not in a.u.) - 3 > fs (other columns are in a.u.) 
+2    !read(1,*) norm_case=1 
+1    !read(1,*) wrap_phase_case=1
+1    !read(1,*) zero_pad_case
+!---------------------------------------------------------------
+
+! FFT_win_case=1> Hann - 2> Hamming - 3> blackman - 4> nuttall - 5> blackman_nuttall - 6> blackman_harris - 7> Flat top - 8> Triangular (Bartlett or Fejér) - 9> Welch - 10> Modified Bartlett-Hanning - 11> Sine - 12> power of Sine (set beforehand p_sin) - 13>  Bohman - 14> Gaussian
+! harm_scan_case=1 > scan over Delta_gap - 2 > scan over elpticity ecc - 3 > scan over E0 - 4 > scan over CEP - 5 > over T1 - 6 > over T2 - 7 > over T_delay_pu_pr
+! norm_case= 0:'backward' - 1:'ortho' - 2: 'forward' 
+The argument norm indicates which direction of the pair of direct/inverse transforms is scaled 
+and with what normalization factor. The default normalization ("backward") “backward”, meaning 
+no normalization on the forward transforms and scaling by 1/n on the ifft. “forward” instead applies 
+the 1/n factor on the forward tranform. For norm="ortho", both directions are scaled by 1/sqrt(n). 

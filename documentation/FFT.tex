@@ -1,0 +1,100 @@
+\documentclass[aps,pra,shortbibliography,onecolumn,showpacs,superscriptaddress]{revtex4-1}
+
+%groupadress: puting autors with different affilation in separate line.
+
+\usepackage{fixmath,amsmath,amsfonts,amssymb,physics,hyperref,romannum,graphicx,natbib}
+%\usepackage{lscape}
+
+\graphicspath{ {Figures/} }
+
+
+%fixmath: mathbold {symbols}
+%romannum: Roman{} : easyway to type roman numerals
+
+\begin{document}
+	
+	\begin{equation}
+		\label{eq:ft}
+		f(t)=f^\prime(t)W(t)=P(t)=\displaystyle\sum_{m=-\infty}^{\infty}{F(\omega)e^{i\omega{t}}}
+	\end{equation} 
+	where $f^\prime(t)$, $W(t)$, $f(t)$, and $P(t)$ are respectively the raw function, the window 
+	function, the tapered (windowed) function and the approximated function by the complex 
+	Fourier series.  In Eq. \eqref{eq:ft} $\omega=m\omega_0$.
+	\begin{equation}
+		\label{eq:Fw}
+		F(\omega)=\int_{-\infty}^{\infty}{f(t)e^{-i\omega{t}}dt} 
+	\end{equation} 
+	If $f(t)\neq 0$ only when $0 <t<T$ then for the normalized Fourier transform over a definite 
+	time interval $T$ we have 
+	\begin{equation}
+		\label{eq:FwT}
+		F(\omega)=\frac{1}{\sqrt{T}}\int_{0}^{T}{f(t)e^{-i\omega{t}}dt}
+	\end{equation} 
+	Using discrete Fourier transform for the above equation we get
+	\begin{equation}
+		\label{eq:DFT}
+		F(\omega)=\frac{\Delta{t}}{\sqrt{T}}\displaystyle\sum_{n=1}^{N}{f_n e^{-i\omega 
+		{n}{\Delta{t}}}}
+	\end{equation} 
+	where $T=N\Delta{t}$ is the total pulse duration. The power spectrum $S(\omega)$ is then 
+	computed by
+	\begin{equation}
+		\label{eq:Sw}
+		S(\omega)=\abs{F(\omega)}^2=\frac{\Delta{t}^2}{T}\abs{\displaystyle\sum_{n=1}^{N}{f_n 
+		e^{-i\omega {n}{\Delta{t}}}}}^2
+	\end{equation} 
+	In order to compute the amplitude and the phase spectra one could simply use
+	\begin{equation}
+		\label{eq:Aw}
+		A(\omega)=\sqrt{S(\omega)}
+	\end{equation} 
+	and 
+	\begin{equation}
+		\label{eq:Phiw}
+		\phi(\omega)=\arctan(\frac{\Im(F(\omega))}{\Re(F(\omega))})
+	\end{equation} 
+	
+	Using the fast Fourier transform algorithm (Cooley–Tukey FFT),  the number of multiplications 
+	that should be done in order to compute $F(\omega)$ drops from $N^2$ (for DFT) to 
+	$N\log_2(N)$ (for FFT). In the FFT packages such as $FFTW3.0$ or $dfti-MKL$, the frequency 
+	resolution is equal to $d\nu=\frac{1}{T}=\frac{1}{N\Delta{t}}$.
+	Giving a $N$ points time domain array to these packages, only the first half of the output 
+	frequency domain (positive frequencies up to the Nyquist frequency ($\frac{N}{2}$)) is useful. 
+	The second half is negative. The first 
+	output would also be the DC frequency.  \par
+	
+The resolution of FFT could be increased by padding a number of zeros to the end of the function 
+array. Doing the so called Zero-padding, $T=T+T_{Zero-padded}$ would be the new total time. 
+The data should be windowed before zero-padding. The point of the windowing process is to 
+smooth out the end-points of the data prior to taking the FFT, so that the spectral leakage is 
+reduced. Otherwise, it seems that all the added zeros are considered a part of the data, which is 
+incorrect.
+
+\par
+	
+	Filtering the computed Fourier transform  of the windowed function in a desired frequency 
+	interval (harmonics $m=\frac{\omega}{\omega_0}$) and suppressing the other frequencies 
+	(harmonics), the new time domain function would be computed using the inverse Fourier 
+	transform 
+	\begin{equation}
+		\label{eq:ftF}
+		f_{filtered}(t) = \displaystyle\sum_{m=m_1}^{m_2} F(\omega)e^{i\omega{t}}.
+	\end{equation}
+	The power spectrum of the filtered inverse Fourier transform 
+	$S_{filtered}(t)=\abs{f_{filtered}(t)}^2$ is usually plotted. 
+	The time-frequency spectrum is also obtainable via a short time Fourier transform method 
+	(STFT). One of such transformations is the Gabor transform:
+	\begin{equation}
+		\label{eq:GTP}
+		G(\omega ,t) = \int{d{t^\prime }f(t^\prime ) e^{- 
+				i\omega t^\prime} e^\qty[- \frac{(t-t^\prime)^2}{2\tau^2}]}
+	\end{equation}
+	where $\tau$ is the width of the time window. The time-frequency spectrum is then calculated 
+	using 
+	
+	\begin{equation}
+		\label{eq:GTP}
+		S(G(\omega ,t)) = \abs{G(\omega ,t)}^2
+	\end{equation}
+	
+\end{document}

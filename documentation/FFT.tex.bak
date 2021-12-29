@@ -1,0 +1,69 @@
+\documentclass[aps,pra,shortbibliography,onecolumn,showpacs,superscriptaddress]{revtex4-1}
+
+%groupadress: puting autors with different affilation in separate line.
+
+\usepackage{fixmath,amsmath,amsfonts,amssymb,physics,hyperref,romannum,graphicx,natbib}
+%\usepackage{lscape}
+
+\graphicspath{ {Figures/} }
+
+
+%fixmath: mathbold {symbols}
+%romannum: Roman{} : easyway to type roman numerals
+
+\begin{document}
+
+\begin{equation}
+\label{eq:ft}
+f(t)=f^\prime(t)G(t)=P(t)=\displaystyle\sum_{m=-\infty}^{\infty}{F(\omega)e^{i\omega{t}}}
+\end{equation} 
+where $f^\prime(t)$, $G(t)$, $f(t)$, and $P(t)$ are respectively the raw function, the window function, the tapered function and the approximated function by the complex Fourier series.  In Eq. \eqref{eq:ft} $\omega=m\omega_0$.
+\begin{equation}
+\label{eq:Fw}
+F(\omega)=\int_{-\infty}^{\infty}{f(t)e^{-i\omega{t}}dt} 
+\end{equation} 
+If $f(t)\neq 0$ only when $0 <t<T$ then for the normalized Fourier transform over a definite time interval $T$ we have 
+\begin{equation}
+\label{eq:FwT}
+F(\omega)=\frac{1}{\sqrt{T}}\int_{0}^{T}{f(t)e^{-i\omega{t}}dt}
+\end{equation} 
+Using discrete Fourier transform for the above equation we get
+\begin{equation}
+\label{eq:DFT}
+F(\omega)=\frac{\Delta{t}}{\sqrt{T}}\displaystyle\sum_{n=1}^{N}{f_n e^{-i\omega {n}{\Delta{t}}}}
+\end{equation} 
+where $T=N\Delta{t}$ is the total pulse duration. The power spectrum $S(\omega)$ is then computed by
+\begin{equation}
+\label{eq:Sw}
+S(\omega)=\frac{\Delta{t}^2}{T}\abs{\displaystyle\sum_{n=1}^{N}{f_n e^{-i\omega {n}{\Delta{t}}}}}^2
+\end{equation} 
+In order to compute the amplitude and the phase spectra one could simply use
+\begin{equation}
+\label{eq:Aw}
+A(\omega)=\sqrt{S(\omega)}
+\end{equation} 
+and 
+\begin{equation}
+\label{eq:Phiw}
+\phi(\omega)=\arctan(\frac{\Im(F(\omega))}{\Re(F(\omega))})
+\end{equation} 
+
+Using the fast Fourier transform algorithm (Cooley–Tukey FFT),  the number of multiplications that should be done in order to compute $F(\omega)$ drops from $N^2$ (for DFT) to $N\log_2(N)$ (for FFT). In the FFT packages such as $FFTW3.0$ or $dfti-MKL$, the frequency resolution is equal to $d\nu=\frac{1}{T}=\frac{\Delta{t}}{N}$. Giving a $N$ points time domain array to these packages, only the first half of the output frequency domain (positive frequencies up to the Nyquist frequency ($\frac{N+1}{2}$)) is useful. The second half is negative. The first output would also be the DC frequency.  Consequently, requesting just $\frac{N+1}{2}$ for the output, the frequency resolution would be the same as before and computed by $d\nu=\frac{1}{T}=\frac{2\Delta{t}}{\frac{N+1}{2}}$.
+
+Filtering the computed Fourier transform  of the windowed function in a desired frequency interval (harmonics $m=\frac{\omega}{\omega_0}$) and suppressing the other frequencies (harmonics), the new time domain function would be computed using the inverse Fourier transform 
+\begin{equation}
+\label{eq:ftF}
+f_{filtered}(t) = \abs{\displaystyle\sum_{m=m_1}^{m_2} F(\omega)e^{i\omega{t}}}
+\end{equation}
+
+The time-frequency spectrum is also obtainable via a short time Fourier transform method (STFT). One of such transformations is the Gabor transform:
+\begin{equation}
+\label{eq:GTP}
+G(\omega ,t) = \int{d{t^\prime }J(t^\prime ) e^{- 
+i\omega t^\prime} e^{- \frac{(t-t^\prime)^2}{2\tau^2}}{2{\sigma 
+^2}}}}
+\end{equation}
+where we set the Gaussian width $ \sigma=2\pi $ in this work.\par
+
+
+\end{document}

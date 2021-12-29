@@ -1,0 +1,6 @@
+1              ! read(3,*) harm_scan_i
+9              ! read(3,*) harm_scan_f
+2              ! read(3,*) harm_scan_s : step - 2 to scanonly negative or positive harmonics
+0.5            ! read(3,*) harm_scan_tol
+0.2            ! read(3,*) scan_param_i : E0 or ecc or ...
+0.2            ! read(3,*) d_scan_param : E0 or ecc or ...

@@ -1,0 +1,13 @@
+4       ! read(2,*) n_column
+1       ! read(2,*) time_col_index (a.u.)
+4       ! read(2,*) func_col_ini
+4       ! read(2,*) func_col_fin
+800     ! read(2,*) landa: laser wave length (nm)
+50      ! read(2,*) Harm_max  
+10.0     ! read(2,*) dTime_profile: time profile element 
+3.0     ! read(2,*) Gabor_time_win: 1.0/(Gabor_time_win*w_0)
+5      ! read(2,*) att_harm_i: filtering over a certain harmonics to get single pulse
+10      ! read(2,*) att_harm_f: filtering over a certain harmonics to get single pulse
+1       ! read(2,*) p_sin !  power of sine window if FFT_win_case=12
+1       ! read(2,*) sigma_gaus <=0.5 if FFT_win_case=14
+5       ! read(2,*) n_zero_pad/n_t
